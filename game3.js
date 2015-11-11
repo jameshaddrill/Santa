@@ -18,13 +18,13 @@ BasicGame.Game.prototype = {
       this.physics.startSystem(Phaser.Physics.ARCADE);
   		this.bg = this.add.tileSprite(0, 0, 800, 600, 'bg');
 
-      this.loopCounter = 0;
+      /*this.loopCounter = 0;
       this.chimneyVel = 30;
 
   		// chimney left
     	  //Add an empty sprite group
 	      this.chimneyPool = this.add.group();
-        
+
         this.chimneyPool.create(this.xPos, 890, 'chimney');
         this.chimneyPool
 	      //Enable physics to the whole sprite group
@@ -43,16 +43,16 @@ BasicGame.Game.prototype = {
 
 
          // set chimney velocity
-         
+
         this.addWall.body.velocity.y = -chimneyVel;
         //
 
          //this.chimneyPool.body.immovable = true;
 
 
-	    
 
-		this.xPos = -500;
+
+		this.xPos = -500; */
 
 
 
@@ -60,7 +60,7 @@ BasicGame.Game.prototype = {
 	},
 
 	update: function () {
-    var chimLength = this.chimneyPool.length;
+   /*var chimLength = this.chimneyPool.length;
 		var latest = this.chimneyPool.getAt(chimLength-1)
     console.log(chimLength);
     //console.log(latest.body.position.y);
@@ -69,46 +69,43 @@ BasicGame.Game.prototype = {
 
         chimney.body.velocity.y = -this.chimneyVel;
 
-      }
-    	
+      } */
+
 	},
 
-  	render: function() {
-  		//this.game.debug.body(this.player);
-  		//this.game.debug.body(chimney);
-  		//this.game.debug.body(chimneyR);
+	render: function() {
+        //this.game.debug.body(this.player);
+        //this.game.debug.body(chimney);
+        //this.game.debug.body(chimneyR);
 
-  	},
+    },
 
     // sprite out of bounds
     chimneyOOB: function(chim) {
-      chim.kill();
+        chim.kill();
     },
-  
 
-  	
-  	
 
-  	chimneyDirection: function() {
-  		//console.log(this.xGap);
 
-  		if (this.loopCounter == 1) {
-  			this.xGap = 1150;
-  		}
 
-  			
-		  else if (this.loopCounter == 10) {
-  			this.chimneyVel = this.chimneyVel + 100;
-  			this.wiggleSize = this.wiggleSize + 20;
-  			
-  		}
-  		else if (this.loopCounter == 15) {
-  			this.chimneyVel = this.chimneyVel + 100;
-  			this.wiggleSize = this.wiggleSize + 20;
-  		}
 
-		else if (this.loopCounter == 20) {
-  			
+    chimneyDirection: function() {
+      //console.log(this.xGap);
+
+      /*if (this.loopCounter == 1) {
+          this.xGap = 1150;
+      } else if (this.loopCounter == 10) {
+          this.chimneyVel = this.chimneyVel + 100;
+          this.wiggleSize = this.wiggleSize + 20;
+
+      } else if (this.loopCounter == 15) {
+          this.chimneyVel = this.chimneyVel + 100;
+          this.wiggleSize = this.wiggleSize + 20;
+      }
+
+
+		  else if (this.loopCounter == 20) {
+
   		}
 
 
@@ -142,6 +139,6 @@ BasicGame.Game.prototype = {
 	  	}
 
   		this.loopCounter = this.loopCounter + 1;
-  	}
+  	} */
 
  };
