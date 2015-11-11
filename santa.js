@@ -14,11 +14,20 @@
 	    // place game bodies.
 	    var gameSize = { x: canvas.width, y: canvas.height };
 
-	    // Create the bodies array to hold the player, bombs and chimneys.
+	    // Create the player array to hold the player
     	this.player = [];
 
-    	// Add the player to the bodies array.
+    	// Create the bodies array to hold the chimneys.
+    	this.chimneys = [];
+
+    	// Create the bombs array to hold the bombs
+    	this.bombs = [];
+
+    	// Add the player to the players array.
     	this.player = this.player.concat(new Player(this, gameSize));
+
+    	// Add other bodies to bodies array
+    	this.chimneys = this.chimneys.concat(createBuildings(this, gameSize));
 
     	var self = this;
 
@@ -47,11 +56,16 @@
 	      	var self = this;
 	      	//console.log('test');
 
-	    	// Call update on every body.
+	    	// Call update on player.
 	     	for (var i = 0; i < this.player.length; i++) {
 		        this.player[i].update();
-		        console.log(this.player[i].center.x);
 		    }
+
+		    // Call update on bombs.
+	     	for (var i = 0; i < this.bombs.length; i++) {
+		        this.bombs[i].update();
+		    }
+
 		},
 
 		// **draw()** draws the game.
@@ -64,6 +78,19 @@
 	        //drawPlayer(screen, this.player[i]);
 	        drawRect(screen, this.player[i]);
 	      }
+
+	      for (var i = 0; i < this.chimneys.length; i++) {
+	      	drawRect(screen, this.chimneys[i]);
+	      }
+
+	      for (var i = 0; i < this.bombs.length; i++) {
+	      	drawRect(screen, this.bombs[i]);
+	      }
+	    },
+
+	    // **addBody()** adds a body to the bodies array.
+	    addBody: function(body) {
+	      this.bombs.push(body);
 	    }
 	}
 
@@ -78,7 +105,7 @@
 	    this.center = { x: 10, y: 10};
 
 	    // Create a keyboard object to track button presses.
-	    //this.keyboarder = new Keyboarder();
+	    this.keyboarder = new Keyboarder();
 
 
 	    this.patrolX = 0;
@@ -116,10 +143,68 @@
 	      // Update variable that keeps track of current position in patrol.
 	      this.patrolX += this.speedX;
 
+	      if (this.keyboarder.isDown(this.keyboarder.KEYS.S)) {
+	      	 var bomb = new Bomb({ x: this.center.x, y: this.center.y - this.size.y + 10 },
+                                { x: 0, y: 7 });
+
+	      	// ... add the bullet to the game...
+        	this.game.addBody(bomb);
+	      }
 
   		}
 
   	};
+
+  	// Bomb
+	// ------
+
+	// **new Bomb()** creates a new bomb.
+	var Bomb = function(center, velocity) {
+	    this.center = center;
+	    this.size = { x: 10, y: 10 };
+	    this.velocity = velocity;
+	};
+
+    Bomb.prototype = {
+	    // **update()** updates the state of the bullet for a single tick.
+	    update: function() {
+	      // Add velocity to center to move bullet.
+	      this.center.x += this.velocity.x;
+	      this.center.y += this.velocity.y;
+	    }
+  	};
+
+  	// Buildings
+  	// -------------
+  	// **new Building()** creates a chimney
+
+  	var Building = function(game, center, height) {
+  		this.game = game;
+	    this.center = center;
+	    this.size = { x: 50, y: height };
+  	}
+
+
+  	// **createInvaders()** returns an array of twenty-four invaders.
+	 var createBuildings = function(game, gameSize) {
+
+	    var buildings = [];
+	    for (var i = 0; i < 18; i++) {
+	    	var buildingHeight = Math.random() * (500 - 100 + 1) + 100;
+
+		    // Place invaders in 10 columns.
+		    var x = 25 + (i % 18) * 50;
+		    var y = gameSize.y - buildingHeight / 2;
+
+		    // Create invader.
+		    buildings.push(new Building(game, { x: x, y: y}, buildingHeight));
+	    }
+
+	    return buildings;
+
+	};
+
+
 
 	// Keyboard input tracking
 	// -----------------------
